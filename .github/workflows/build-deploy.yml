@@ -57,4 +57,4 @@ jobs:
           sudo chmod -R 755 /var/www/react-app
           
       - name: Restart Nginx
-        run: sudo systemctl restart nginx
+        run: sudo service restart nginx
