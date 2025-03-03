@@ -52,7 +52,7 @@ jobs:
         run: |
           sudo mkdir -p /var/www/react-app
           sudo rm -rf /var/www/react-app/*
-          sudo cp -r build/* /var/www/react-app/
+          sudo cp -r dist/* /var/www/react-app/
           sudo chown -R www-data:www-data /var/www/react-app
           sudo chmod -R 755 /var/www/react-app
           
