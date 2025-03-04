@@ -42,6 +42,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.textFieldBackground,
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
