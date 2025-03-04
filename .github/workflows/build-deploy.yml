@@ -32,7 +32,7 @@ jobs:
       - name: Install Nginx
         run: |
           sudo apt-get update
-          sudo apt-et install -y nginx
+          sudo apt-get install -y nginx
         
       - name: Configure Nginx
         run: |
