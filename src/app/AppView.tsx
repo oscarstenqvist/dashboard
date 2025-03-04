@@ -1,19 +1,12 @@
 import { ThemeProvider } from '@mui/material/styles';
-import ShoppingListView from './shoppinglist/ShoppingListView';
-import theme from './styling/theme';
+import ShoppingListView from '../shoppinglist/ShoppingListView';
+import theme from '../styling/theme';
 import { CssBaseline, Tab, Tabs } from '@mui/material';
-import { useState } from 'react';
-import StockView from './stock/StockView';
+import StockView from '../stock/StockView';
+import useAppService from './AppService';
 
-const tabs = ["Inköpslista", "Aktier"]
-
-function App() {
-  const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
-
-  const handleTabChange = (_: React.SyntheticEvent, newValue: string) => {
-    setSelectedTab(newValue);
-  };
-
+function AppView() {
+  const { tabs, selectedTab, handleTabChange } = useAppService();;
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -27,4 +20,4 @@ function App() {
     </ThemeProvider>
   )
 }
-export default App
+export default AppView
