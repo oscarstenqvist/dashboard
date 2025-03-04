@@ -4,6 +4,7 @@ import theme from '../styling/theme';
 import { CssBaseline, Tab, Tabs } from '@mui/material';
 import StockView from '../stock/StockView';
 import useAppService from './AppService';
+import SportView from '../sport/SportView';
 
 function AppView() {
   const { tabs, selectedTab, handleTabChange } = useAppService();;
@@ -15,8 +16,9 @@ function AppView() {
           <Tab key={value} label={value} value={value} />
         ))}
       </Tabs>
-      {selectedTab === tabs[0] && <ShoppingListView />}
-      {selectedTab === tabs[1] && <StockView />}
+      {selectedTab === "Inköpslista" && <ShoppingListView />}
+      {selectedTab === "Aktier" && <StockView />}
+      {selectedTab === "Sport" && <SportView />}
     </ThemeProvider>
   )
 }
