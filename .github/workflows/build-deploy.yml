@@ -1,35 +1,39 @@
-name: Build and Deploy React App
+name: Build React and Deploy Nginx
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build-and-deploy:
     runs-on: [self-hosted, linux, arm64, raspberrypi]
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.9.0'
-          cache: 'npm'
-          
-      - name: Install dependencies
+          node-version: 20.x
+          cache: "npm"
+
+      - name: Install node packages
         run: npm ci
-      
+
+      - name: Run linting
+        run: npm run lint
+
       - name: Build React app
         run: npm run build
-        
-      - name: Setup Nginx
+
+      - name: Install Nginx
         run: |
           sudo apt-get update
-          sudo apt-get install -y nginx
-          
+          sudo apt-et install -y nginx
+        
       - name: Configure Nginx
         run: |
           sudo tee /etc/nginx/sites-available/react-app > /dev/null << EOT
@@ -47,7 +51,7 @@ jobs:
           EOT
           sudo ln -sf /etc/nginx/sites-available/react-app /etc/nginx/sites-enabled/
           sudo rm -f /etc/nginx/sites-enabled/default
-          
+      
       - name: Deploy to Nginx
         run: |
           sudo mkdir -p /var/www/react-app
@@ -55,6 +59,6 @@ jobs:
           sudo cp -r dist/* /var/www/react-app/
           sudo chown -R www-data:www-data /var/www/react-app
           sudo chmod -R 755 /var/www/react-app
-          
+
       - name: Restart Nginx
         run: sudo service nginx restart
