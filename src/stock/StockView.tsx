@@ -11,6 +11,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
+  Filler
 } from "chart.js";
 import { colors } from "../styling/theme";
 
@@ -22,36 +24,61 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler,
 );
 
+// Define the API response interface based on your sample data
+interface StockApiResponse {
+  "Meta Data": {
+    "1. Information": string;
+    "2. Symbol": string;
+    "3. Last Refreshed": string;
+    "4. Output Size": string;
+    "5. Time Zone": string;
+  };
+  "Time Series (Daily)": {
+    [date: string]: {
+      "1. open": string;
+      "2. high": string;
+      "3. low": string;
+      "4. close": string;
+      "5. volume": string;
+    };
+  };
+}
+
 function StockView() {
+  // Specify the type of chartData so TypeScript knows its shape
+  const [chartData, setChartData] = useState<ChartData<"line", number[], string> | null>(null);
   const { getDailyStockData } = useStockApi();
-  const [chartData, setChartData] = useState(null);
 
   const handleStockClick = async () => {
     try {
-      const data = await getDailyStockData("NVDA");
-      if (!data) return;
+      // Assert that the response matches our interface
+      const data = (await getDailyStockData("NVDA")) as unknown as StockApiResponse;
+      if (!data || !data["Time Series (Daily)"]) return;
 
-      // Process the stock data
-      const labels = [];
-      const prices = [];
+      const labels: string[] = [];
+      const prices: number[] = [];
 
-      // Extract date and close price for the chart
-      for (const date in data["Time Series (Daily)"]) {
-        labels.push(date);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        prices.push(parseFloat(data["Time Series (Daily)"][date]["4. close"]));
+      const dailyData = data["Time Series (Daily)"];
+
+      // Iterate over each date in the time series
+      for (const date in dailyData) {
+        if (Object.prototype.hasOwnProperty.call(dailyData, date)) {
+          labels.push(date);
+          prices.push(parseFloat(dailyData[date]["4. close"]));
+        }
       }
 
-      // Create chart data object
+      // Reverse the arrays so that the most recent date is last
       setChartData({
-        labels: labels.reverse(), // Reverse so the most recent date is at the end
+        labels: labels.reverse(),
         datasets: [
           {
             label: "NVDA Closing Price",
-            data: prices.reverse(), // Reverse the data to match the dates
+            data: prices.reverse(),
             borderColor: colors.primary,
             fill: true,
             tension: 0.1,
