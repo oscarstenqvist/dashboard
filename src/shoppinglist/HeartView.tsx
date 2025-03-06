@@ -8,7 +8,7 @@ const textWeight = 500;
 const text = "Rasa";
 
 const StyledFavoriteIcon = styled(FavoriteIcon)`
-  color: red;
+  color: "#ff3187";
   width: ${heartSize};
   height: ${heartSize};
 `;
