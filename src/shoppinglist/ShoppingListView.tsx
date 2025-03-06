@@ -1,54 +1,55 @@
-import { Button, IconButton, styled, TextField, Typography } from "@mui/material";
-import Grid from '@mui/material/Grid2';
-import useShoppingList from "./ShoppingListService";
+import { Button, IconButton, styled, TextField, Typography, Stack } from "@mui/material";
+import useShoppingList from "./UseShoppingList";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
 import HeartView from "./HeartView";
-import { useEffect, useRef } from "react";
 
-const StyledGrid = styled(Grid)`
+const StyledStack = styled(Stack)`
   align-items: center;
   justify-content: center;
 `;
 
 function ShoppingListView() {
-  const { items, addItem, removeItem, register, showHeartView, lastAddedUuid } = useShoppingList();
-  const lastTextFieldRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (lastAddedUuid && lastTextFieldRef.current) {
-      lastTextFieldRef.current.focus();
-    }
-  }, [lastAddedUuid]);
+  const { items, addItem, removeItem, register, showHeartView, lastAddedUuid, lastTextFieldRef } = useShoppingList();
 
   if (showHeartView) {
     return <HeartView />
   }
-
-  return (
-    <>
-      <Typography variant="h6">Inköpslista</Typography>
-      {Object.keys(items).map((uuid) => (
-        <StyledGrid container key={uuid} direction="row">
-          <Grid size={1} />
-          <Grid size={10}>
-            <TextField {...register(uuid)} inputRef={uuid === lastAddedUuid ? lastTextFieldRef : null} onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                addItem();
-              }
-            }} />
-          </Grid>
-          <Grid size={1}>
+  else {
+    return (
+      <>
+        <Typography variant="h4">Inköpslista</Typography>
+        {Object.keys(items).map((uuid) => (
+          <StyledStack
+            key={uuid}
+            direction="row"
+            spacing={2}
+          >
+            <Stack sx={{ width: '10%' }} />
+            <Stack sx={{ width: '80%' }}>
+              <TextField
+                fullWidth
+                {...register(uuid)}
+                inputRef={uuid === lastAddedUuid ? lastTextFieldRef : null}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    addItem();
+                  }
+                }}
+              />
+            </Stack>
             <IconButton color="secondary" onClick={() => removeItem(uuid)}>
               <DeleteIcon />
             </IconButton>
-          </Grid>
-        </StyledGrid>
-      ))}
-      <Button onClick={addItem}>
-        <AddIcon />
-      </Button>
-    </>
-  )
+          </StyledStack>
+        ))}
+        <Button onClick={addItem}>
+          <AddIcon />
+        </Button>
+      </>
+    )
+  }
 }
+
 export default ShoppingListView;

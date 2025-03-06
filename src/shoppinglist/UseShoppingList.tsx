@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,6 +12,13 @@ const useShoppingList = () => {
   const { register, unregister, handleSubmit, setValue, watch } = useForm<Inputs>();
   const [lastAddedUuid, setLastAddedUuid] = useState<string | null>(null);
   const [showHeartView, setShowHeartView] = useState<boolean>(false);
+  const lastTextFieldRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (lastAddedUuid && lastTextFieldRef.current) {
+      lastTextFieldRef.current.focus();
+    }
+  }, [lastAddedUuid]);
   const items = watch();
 
   const onSubmit: SubmitHandler<Inputs> = useCallback((data) => {
@@ -56,6 +63,6 @@ const useShoppingList = () => {
     }
   };
 
-  return { items, addItem, removeItem, register, showHeartView, lastAddedUuid }
+  return { items, addItem, removeItem, register, showHeartView, lastAddedUuid, lastTextFieldRef }
 }
 export default useShoppingList;

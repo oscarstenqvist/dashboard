@@ -2,22 +2,22 @@ import { Stack, Tab, Tabs } from '@mui/material';
 import ShoppingListView from '../shoppinglist/ShoppingListView';
 import SportView from '../sport/SportView';
 import StockView from '../stock/StockView';
-import useAppService from './AppService';
 import { defaultPadding, defaultSpacing } from '../styling/ThemeConstants';
+import useTabs from './UseTabs';
 
 function AppView() {
-  const { tabs, selectedTab, handleTabChange } = useAppService();;
+  const { tabs, selectedTab, onTabChange } = useTabs();
   return (
     <>
-      <Tabs value={selectedTab} onChange={handleTabChange} variant="fullWidth">
+      <Tabs value={selectedTab} onChange={onTabChange} variant="fullWidth">
         {tabs.map((value) => (
           <Tab key={value} label={value} value={value} />
         ))}
       </Tabs>
       <Stack padding={defaultPadding} spacing={defaultSpacing} alignItems="center">
-        {selectedTab === "Sport" && <SportView />}
-        {selectedTab === "Inköpslista" && <ShoppingListView />}
-        {selectedTab === "Aktier" && <StockView />}
+        {selectedTab === tabs[0] && <SportView />}
+        {selectedTab === tabs[1] && <ShoppingListView />}
+        {selectedTab === tabs[2] && <StockView />}
       </Stack>
     </>
   )

@@ -1,6 +1,6 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Button, styled, Typography, Zoom } from '@mui/material';
-import useHeart from './HeartService';
+import useHeart from './UseHeart';
 
 const heartSize = "45%";
 const textSize = "6rem";
