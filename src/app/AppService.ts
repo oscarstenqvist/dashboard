@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const tabs = ["Sport", "Inköpslista", "Aktier",];
+const tabs = ["Sports", "Shoppinglist", "Stocks",];
 
 const useAppService = () => {
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
