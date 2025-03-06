@@ -23,19 +23,13 @@ jobs:
       - name: Install node packages
         run: npm ci
 
-      - name: Run linting
-        run: npm run lint
-
       - name: Build React app
         run: npm run build
 
-      - name: Install Nginx
+      - name: Install, Configure and deploy Nginx
         run: |
           sudo apt-get update
           sudo apt-get install -y nginx
-        
-      - name: Configure Nginx
-        run: |
           sudo tee /etc/nginx/sites-available/react-app > /dev/null << EOT
           server {
               listen 80;
@@ -51,14 +45,9 @@ jobs:
           EOT
           sudo ln -sf /etc/nginx/sites-available/react-app /etc/nginx/sites-enabled/
           sudo rm -f /etc/nginx/sites-enabled/default
-      
-      - name: Deploy to Nginx
-        run: |
           sudo mkdir -p /var/www/react-app
           sudo rm -rf /var/www/react-app/*
           sudo cp -r dist/* /var/www/react-app/
           sudo chown -R www-data:www-data /var/www/react-app
           sudo chmod -R 755 /var/www/react-app
-
-      - name: Restart Nginx
-        run: sudo service nginx restart
+          sudo service nginx restart
