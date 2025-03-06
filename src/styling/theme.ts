@@ -1,80 +1,84 @@
 import { createTheme } from "@mui/material";
-
+const borderRadius = 2;
 export const colors = {
-  background: "#434343",
-  primary: "#5CBC97",
-  secondary: "#E1D584",
-  textFieldBackground: "#656565",
+  primary: "#90caf9",
+  primaryContrastText: "#000000",
+  secondary: "#ba68c8",
+  background: "#4a4a4a",
+  paperBackground: "#2d2d2d",
+  textPrimary: "rgba(255,255,255,0.87)",
+  textSecondary: "rgba(255,255,255,0.6)",
+  textDisabled: "rgba(255,255,255,0.12)",
 }
-
-const sizes = {
-  button: {
-    width: "100px",
-    height: "50px",
-  },
-  textField: {
-    width: "250px",
-    height: "50px",
-  }
-}
-
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: colors.primary,
-      contrastText: colors.secondary,
+      contrastText: colors.primaryContrastText,
     },
     secondary: {
       main: colors.secondary,
-      contrastText: colors.primary,
     },
+    background: {
+      default: colors.background,
+      paper: colors.paperBackground,
+    },
+    text: {
+      primary: colors.textPrimary,
+      secondary: colors.textSecondary,
+      disabled: colors.textDisabled,
+    },
+    divider: colors.textDisabled,
   },
   typography: {
-    allVariants: {
-      color: colors.primary,
-    },
+    fontFamily: 'Montserrat',
   },
   components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          backgroundColor: colors.background,
-        },
-      },
-    },
-    MuiTab: {
-      styleOverrides: {
-        root: {
-          backgroundColor: colors.textFieldBackground,
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          width: sizes.textField.width,
-          '& .MuiInputBase-root': {
-            height: sizes.textField.height,
-            color: colors.primary,
-            backgroundColor: colors.textFieldBackground,
-          },
-          '& .MuiInputLabel-root': {
-            color: colors.secondary,
-          },
-        },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
       },
     },
     MuiButton: {
       defaultProps: {
         variant: "contained",
       },
+    },
+    MuiTab: {
       styleOverrides: {
         root: {
-          width: sizes.button.width,
-          height: sizes.button.height,
-        }
-      }
+          backgroundColor: colors.primary,
+          color: colors.primaryContrastText,
+          "&.Mui-selected": {
+            color: colors.secondary,
+            fontWeight: 700,
+          },
+        },
+      },
     },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          backgroundColor: colors.secondary,
+          height: 4,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: colors.textPrimary,
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: colors.primary,
+          },
+        },
+      },
+    },
+  },
+  shape: {
+    borderRadius: borderRadius,
   },
 });
 export default theme;
