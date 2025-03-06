@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: [self-hosted, linux, arm64, raspberrypi]
+    runs-on: [self-hosted, Linux, ARM64, raspberrypi]
 
     steps:
       - name: Checkout code
