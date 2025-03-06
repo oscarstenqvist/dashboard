@@ -1,25 +1,25 @@
-import { ThemeProvider } from '@mui/material/styles';
+import { Stack, Tab, Tabs } from '@mui/material';
 import ShoppingListView from '../shoppinglist/ShoppingListView';
-import theme from '../styling/theme';
-import { CssBaseline, Tab, Tabs } from '@mui/material';
+import SportView from '../sport/SportView';
 import StockView from '../stock/StockView';
 import useAppService from './AppService';
-import SportView from '../sport/SportView';
+import { defaultPadding, defaultSpacing } from '../styling/ThemeConstants';
 
 function AppView() {
   const { tabs, selectedTab, handleTabChange } = useAppService();;
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <Tabs value={selectedTab} onChange={handleTabChange} variant="fullWidth">
         {tabs.map((value) => (
           <Tab key={value} label={value} value={value} />
         ))}
       </Tabs>
-      {selectedTab === "Inköpslista" && <ShoppingListView />}
-      {selectedTab === "Aktier" && <StockView />}
-      {selectedTab === "Sport" && <SportView />}
-    </ThemeProvider>
+      <Stack padding={defaultPadding} spacing={defaultSpacing} alignItems="center">
+        {selectedTab === "Sport" && <SportView />}
+        {selectedTab === "Inköpslista" && <ShoppingListView />}
+        {selectedTab === "Aktier" && <StockView />}
+      </Stack>
+    </>
   )
 }
 export default AppView

@@ -1,7 +1,8 @@
 import { useState } from "react";
 
+const tabs = ["Sport", "Inköpslista", "Aktier",];
+
 const useAppService = () => {
-  const tabs = ["Inköpslista", "Aktier", "Sport",]
   const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: string) => {

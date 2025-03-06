@@ -2,7 +2,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Button, styled, Typography, Zoom } from '@mui/material';
 import useHeart from './HeartService';
 
-const heartSize = "100%";
+const heartSize = "45%";
 const textSize = "6rem";
 const textWeight = 500;
 const text = "Rasa";
@@ -45,11 +45,11 @@ function HeartView() {
     <>
       <Zoom in={true} timeout={5000} onEntered={handleEntered}>
         <StyledOuterDiv>
+          {showBack && <Button onClick={onClickBack}>Back</Button>}
           <StyledDiv>
             <StyledFavoriteIcon />
             <StyledTypography>{text}</StyledTypography>
           </StyledDiv>
-          {showBack && <Button onClick={onClickBack}>Back</Button>}
         </StyledOuterDiv>
       </Zoom>
     </>
