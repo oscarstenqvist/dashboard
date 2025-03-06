@@ -1,8 +1,8 @@
-import { Button, IconButton, styled, TextField, Typography, Stack } from "@mui/material";
-import useShoppingList from "./UseShoppingList";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Button, IconButton, Stack, styled, TextField } from "@mui/material";
 import HeartView from "./HeartView";
+import useShoppingList from "./UseShoppingList";
 
 const StyledStack = styled(Stack)`
   align-items: center;
@@ -18,7 +18,6 @@ function ShoppingListView() {
   else {
     return (
       <>
-        <Typography variant="h4">Inköpslista</Typography>
         {Object.keys(items).map((uuid) => (
           <StyledStack
             key={uuid}
