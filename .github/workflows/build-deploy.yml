@@ -19,7 +19,7 @@ jobs:
           cache: "npm"
 
       - name: Install node packages
-        run: npm ci
+        run: npm i
 
       - name: Build React app
         run: npm run build
