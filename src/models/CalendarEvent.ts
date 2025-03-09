@@ -3,6 +3,8 @@ interface CalendarEvent {
   start: Date;
   end: Date;
   location?: string;
-  description?: string;
+  uid?: string;
+  localizedStart: string;
+  localizedEnd: string;
 }
 export default CalendarEvent;
