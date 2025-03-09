@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/ecal-sub': { // Or the base path of your API
+      '/ecal-sub': {
         target: 'https://ics.ecal.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/ecal-sub/, '/ecal-sub'), // important to keep the path correct.
+        rewrite: (path) => path.replace(/^\/ecal-sub/, '/ecal-sub'),
       },
     },
   },

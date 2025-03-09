@@ -1,5 +1,5 @@
 import { Card, CardContent, Stack, Typography } from "@mui/material";
-import useCalendar from "../hooks/FetchCalendar";
+import useCalendar from "./UseCalendar";
 import { defaultPadding, defaultSpacing } from "../styling/ThemeConstants";
 
 function SportView() {
