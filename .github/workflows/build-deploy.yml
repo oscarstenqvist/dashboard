@@ -37,7 +37,7 @@ jobs:
               index index.html;
               
               location /ecal-sub/ {
-                proxy_pass https://ics.ecal.com;
+                proxy_pass https://ics.ecal.com/67cd7aae16faa30008c9eb23/Formula%201.ics;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -46,7 +46,7 @@ jobs:
 
               location ~ \.ics$ {
                 default_type text/calendar;
-                proxy_pass https://ics.ecal.com;
+                proxy_pass https://ics.ecal.com/67cd7aae16faa30008c9eb23/Formula%201.ics;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
