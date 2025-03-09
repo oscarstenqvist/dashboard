@@ -11,7 +11,6 @@ interface Inputs {
 const useShoppingList = () => {
   const { register, unregister, handleSubmit, setValue, watch } = useForm<Inputs>();
   const [lastAddedUuid, setLastAddedUuid] = useState<string | null>(null);
-  const [showHeartView, setShowHeartView] = useState<boolean>(false);
   const lastTextFieldRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -24,17 +23,6 @@ const useShoppingList = () => {
   const onSubmit: SubmitHandler<Inputs> = useCallback((data) => {
     localStorage.setItem(localStorageKey, JSON.stringify(data));
   }, []);
-
-  //Easter egg
-  useEffect(() => {
-    const values = Object.values(items);
-    if (values.some(value => value === "Rasa")) {
-      setShowHeartView(true)
-    }
-    else {
-      setShowHeartView(false);
-    }
-  }, [items]);
 
   //Set localStorage whenever user changes input/remove item
   useEffect(() => {
@@ -63,6 +51,6 @@ const useShoppingList = () => {
     }
   };
 
-  return { items, addItem, removeItem, register, showHeartView, lastAddedUuid, lastTextFieldRef }
+  return { items, addItem, removeItem, register, lastAddedUuid, lastTextFieldRef }
 }
 export default useShoppingList;
