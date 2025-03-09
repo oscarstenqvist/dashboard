@@ -7,10 +7,12 @@ function SportView() {
   return (
     <Stack padding={defaultPadding} spacing={defaultSpacing}>
       {events.map((event) => (
-        <Card key={event.title}>
+        <Card key={event.uid}>
           <CardContent>
-            <Typography>{event.title}</Typography>
-            <Typography>{event.start.toLocaleString("sv-se") + "-" + event.end.toLocaleTimeString("sv-se")}</Typography>
+            <Stack alignItems={"center"}>
+              <Typography>{"🏎" + event.title + " - " + event.location}</Typography>
+              <Typography>{event.localizedStart + "-" + event.localizedEnd}</Typography>
+            </Stack>
           </CardContent>
         </Card>
       ))}
